@@ -3,9 +3,9 @@ webix.ui({
         { view: "template", type: "header", template: "ระบบรายงานรายการสั่งซื้อสินค้า" },
         {
             id:"customerForm",view: "form", cols: [
-                {view:"text",name:"customerID",width:100,label:"รหัส"},
-                {view:"text",name:"customerName",width:200,label:"รหัส"},
-                {view:"text",name:"Address",width:100,label:"ที่อยู่"},
+                {view:"text",labelPosition:"left",name:"customerID",width:200,label:"รหัส",editable:"false"},
+                {view:"text",labelPosition:"left",name:"customerName",width:200,label:"ชื่อร้านค้า",editable:"false"},
+                {view:"text",labelPosition:"left",name:"Address",width:200,label:"ที่อยู่",editable:"false"},
             ]
         },
         {view:"template",type:"space",height:10},
