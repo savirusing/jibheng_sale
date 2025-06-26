@@ -29,7 +29,7 @@ webix.ui({
                             { id: "yellow", header: "สีเหลือง", width: 120, editor: "text", css: { "text-align": "right" } },
                             { id: "red", header: "สีแดง", width: 120, editor: "text", css: { "text-align": "right" } },
                             { id: "pink", header: "สีชมพู", width: 120, editor: "text", css: { "text-align": "right" } },
-                            { id: "total", header: "รวม", width: 120, editable: false, css: { "text-align": "right" }, math: "[$r,white]+[$r,yellow]" },
+                            { id: "total", header: "รวม", width: 120, editable: false, css: { "text-align": "right" } },
                         ],
                         data: [
                             { id: 1, products: "5x8x150 DB", brand: "ดอกบัว", pcs: "ลัง" },
@@ -39,8 +39,8 @@ webix.ui({
                         ],
                         on: {
                             onDataUpdate: function (id, data, old) {
-                                let total = float(data.white)+float(data.yellow) 
-                                this.updateItem(id, { total: total});
+                                let total = Number(data.white) + Number(data.yellow) + Number(data.red) + Number(data.pink)
+                                this.updateItem(id, { total: total });
                             },
                         }
                     }
