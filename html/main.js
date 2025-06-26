@@ -2,6 +2,14 @@ webix.ui({
     rows: [
         { view: "template", type: "header", template: "ระบบรายงานรายการสั่งซื้อสินค้า" },
         {
+            id:"customerForm",view: "form", cols: [
+                {view:"text",name:"customerID",width:100,label:"รหัส"},
+                {view:"text",name:"customerName",width:200,label:"รหัส"},
+                {view:"text",name:"Address",width:100,label:"ที่อยู่"},
+            ]
+        },
+        {view:"template",type:"space",height:10},
+        {
             view: "tabview",
             height: 350,
             cells: [
@@ -29,9 +37,9 @@ webix.ui({
                     }
                 },
                 {
-                    header:"ธูป",
-                    body:{
-                        view:"datatable",
+                    header: "ธูป",
+                    body: {
+                        view: "datatable",
                     }
                 }
             ]
