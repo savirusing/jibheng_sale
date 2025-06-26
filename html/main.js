@@ -2,8 +2,8 @@ webix.ui({
     rows: [
         { view: "template", type: "header", template: "ระบบรายงานรายการสั่งซื้อสินค้า" },
         {
-            id: "customerForm", view: "form", type: "space", cols: [
-                { view: "button", width: 100, type: "icon", icon: "mdi mdi-account-search", label: "เลือกลูกค้า" },
+            id: "customerForm", view: "form", cols: [
+                { view: "button", width: 120, label: "เลือกลูกค้า", css: "webix_primary" },
                 { view: "text", labelPosition: "left", labelAlign: "right", name: "customerID", width: 200, label: "รหัส", editable: false },
                 { view: "text", labelPosition: "left", labelAlign: "right", name: "customerName", width: 200, label: "ชื่อร้านค้า", editable: false },
                 { view: "text", labelPosition: "left", labelAlign: "right", name: "Address", width: 200, label: "ที่อยู่", editable: false },
@@ -18,6 +18,8 @@ webix.ui({
                     body: {
                         view: "datatable",
                         // autoConfig: true,
+                        select:true,
+                        css:"rows",
                         editable: true,
                         columns: [
                             { id: "id", header: "ลำดับ", width: 30, editable: false },
