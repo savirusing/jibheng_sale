@@ -23,7 +23,7 @@ webix.ui({
                         editable: true,
                         columns: [
                             { id: "id", header: "No.", width: 40, editable: false },
-                            { id: "products", header: [{ text: "รายการสินค้า", css: { "text-align": "center" } }, { content: "textFilter" }], minWidth: 200, fillspace: true, editable: false, },
+                            { id: "products", header: [{ text: "รายการสินค้า", css: { "text-align": "center" } }, { placehlder:"ค้นหาสินค้า",content: "textFilter" }], minWidth: 200, fillspace: true, editable: false, },
                             { id: "brand", width: 100, editable: false, header: ["ตรา", { content: "selectFilter" }], css: { "text-align": "center" } },
                             { id: "white", header: "สีขาว", width: 120, editor: "text", css: { "text-align": "right" } },
                             { id: "yellow", header: "สีเหลือง", width: 120, editor: "text", css: { "text-align": "right" } },
