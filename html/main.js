@@ -18,7 +18,7 @@ webix.ui({
                     body: {
                         view: "datatable",
                         // autoConfig: true,
-                        select: true,
+                        select: "cell",
                         css: "rows",
                         editable: true,
                         columns: [
