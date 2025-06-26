@@ -2,9 +2,9 @@ webix.ui({
     rows: [
         { view: "template", type: "header", template: "ระบบรายงานรายการสั่งซื้อสินค้า" },
         {
-            view: "accordion",
-            multi: true,
-            rows: [
+            view: "tabview",
+            height: 350,
+            cells: [
                 {
                     header: "เทียน",
                     body: {
@@ -29,15 +29,12 @@ webix.ui({
                     }
                 },
                 {
-                    header: "col 2",
-                    body: "content 2"
-                },
-                {
-                    header: "col 3",
-                    body: "content 3"
+                    header:"ธูป",
+                    body:{
+                        view:"datatable",
+                    }
                 }
             ]
         },
-
     ]
 });
