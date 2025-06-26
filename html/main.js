@@ -38,8 +38,9 @@ webix.ui({
                             { id: 4, products: "7x6x120 DB", brand: "ดอกบัว", pcs: "ลัง" },
                         ],
                         on: {
-                            onEnter: function (ev) {
-                                console.log(ev);
+                            onKeyPress: function (code,e) {
+                                console.log(code);
+                                console.log(e);
                                 this.editCell();
                             }
                         }
