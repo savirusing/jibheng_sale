@@ -23,13 +23,13 @@ webix.ui({
                         editable: true,
                         columns: [
                             { id: "id", header: "No.", width: 40, editable: false },
-                            { id: "products", header: [{ text: "รายการสินค้า", css: { "text-align": "center" } }, { placehlder:"ค้นหาสินค้า",content: "textFilter" }], minWidth: 200, fillspace: true, editable: false, },
+                            { id: "products", header: [{ text: "รายการสินค้า", css: { "text-align": "center" } }, { placehlder: "ค้นหาสินค้า", content: "textFilter" }], minWidth: 200, fillspace: true, editable: false, },
                             { id: "brand", width: 100, editable: false, header: ["ตรา", { content: "selectFilter" }], css: { "text-align": "center" } },
                             { id: "white", header: "สีขาว", width: 120, editor: "text", css: { "text-align": "right" } },
                             { id: "yellow", header: "สีเหลือง", width: 120, editor: "text", css: { "text-align": "right" } },
                             { id: "red", header: "สีแดง", width: 120, editor: "text", css: { "text-align": "right" } },
                             { id: "pink", header: "สีชมพู", width: 120, editor: "text", css: { "text-align": "right" } },
-                            { id: "Total", header: "รวม", width: 120, editable: false, css: { "text-align": "right" }, math: "[$r,white]+[$r,yellow]" },
+                            { id: "total", header: "รวม", width: 120, editable: false, css: { "text-align": "right" }, math: "[$r,white]+[$r,yellow]" },
                         ],
                         data: [
                             { id: 1, products: "5x8x150 DB", brand: "ดอกบัว", pcs: "ลัง" },
@@ -38,11 +38,12 @@ webix.ui({
                             { id: 4, products: "7x6x120 DB", brand: "ดอกบัว", pcs: "ลัง" },
                         ],
                         on: {
-                            onKeyPress: function (code,e) {
-                                console.log(code);
-                                console.log(e);
-                                this.editCell();
-                            }
+                            onDataUpdate: function (id, data, old) {
+                                console.log(data);
+                                let row_value = this.getItem(id);
+                                console.log(row_value);
+                                this.updateItem(id, { total: row_value.white + row_value.yellow});
+                            },
                         }
                     }
                 },
