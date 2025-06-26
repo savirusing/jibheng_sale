@@ -11,7 +11,6 @@ webix.ui({
         },
         {
             view: "tabview",
-            height: 350,
             cells: [
                 {
                     header: "เทียน",
@@ -20,6 +19,7 @@ webix.ui({
                         // autoConfig: true,
                         select: "cell",
                         fillspace:true,
+                        autoHeight:true,
                         css: "rows",
                         math: true,
                         editable: true,
