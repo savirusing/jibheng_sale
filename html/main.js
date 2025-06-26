@@ -22,13 +22,14 @@ webix.ui({
                         css: "rows",
                         editable: true,
                         columns: [
-                            { id: "id", header: "ลำดับ", width: 30, editable: false },
-                            { id: "products", header: ["รายการสินค้า", { content: "textFilter" }], minWidth: 200, fillspace: true, editable: false, },
+                            { id: "id", header: "No.", width: 30, editable: false },
+                            { id: "products", header: ["รายการสินค้า", { content: "textFilter",css:{"text-align": "center"} }], minWidth: 200, fillspace: true, editable: false, },
                             { id: "brand", width: 100, editable: false, header: ["ตรา", { content: "selectFilter" }], css: { "text-align": "center" } },
                             { id: "white", header: "สีขาว", width: 120, editor: "text", css: { "text-align": "right" } },
                             { id: "yellow", header: "สีเหลือง", width: 120, editor: "text", css: { "text-align": "right" } },
                             { id: "red", header: "สีแดง", width: 120, editor: "text", css: { "text-align": "right" } },
                             { id: "pink", header: "สีชมพู", width: 120, editor: "text", css: { "text-align": "right" } },
+                            { id: "Total", header: "รวม", width: 120,  editable: false, css: { "text-align": "right" },math:"[$r,white]+[$r,yellow]" },
                         ],
                         data: [
                             { id: 1, products: "5x8x150 DB", brand: "ดอกบัว", pcs: "ลัง" },
