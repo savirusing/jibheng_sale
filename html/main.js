@@ -39,10 +39,8 @@ webix.ui({
                         ],
                         on: {
                             onDataUpdate: function (id, data, old) {
-                                console.log(data);
-                                let row_value = this.getItem(id);
-                                console.log(row_value);
-                                this.updateItem(id, { total: row_value.white + row_value.yellow});
+                                let total = float(data.white)+float(data.yellow) 
+                                this.updateItem(id, { total: total});
                             },
                         }
                     }
