@@ -20,6 +20,7 @@ webix.ui({
                         // autoConfig: true,
                         select: "cell",
                         css: "rows",
+                        math:true,
                         editable: true,
                         columns: [
                             { id: "id", header: "No.", width: 40, editable: false },
@@ -29,7 +30,7 @@ webix.ui({
                             { id: "yellow", header: "สีเหลือง", width: 120, editor: "text", css: { "text-align": "right" } },
                             { id: "red", header: "สีแดง", width: 120, editor: "text", css: { "text-align": "right" } },
                             { id: "pink", header: "สีชมพู", width: 120, editor: "text", css: { "text-align": "right" } },
-                            { id: "total", header: "รวม", width: 120, editable: false, css: { "text-align": "right" } },
+                            { id: "total", header: "รวม", width: 120, editable: false, css: { "text-align": "right" } ,math:"[$r,white] - [$r,yellow]"},
                         ],
                         data: [
                             { id: 1, products: "5x8x150 DB", brand: "ดอกบัว", pcs: "ลัง" },
@@ -37,12 +38,6 @@ webix.ui({
                             { id: 3, products: "6x8x150 A", brand: "อูฐ", pcs: "ลัง" },
                             { id: 4, products: "7x6x120 DB", brand: "ดอกบัว", pcs: "ลัง" },
                         ],
-                        on: {
-                            onDataUpdate: function (id, data, old) {
-                                let total = Number(data.white) + Number(data.yellow) + Number(data.red) + Number(data.pink)
-                                this.updateItem(id, { total: total });
-                            },
-                        }
                     }
                 },
                 {
