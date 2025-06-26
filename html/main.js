@@ -24,7 +24,7 @@ webix.ui({
                         columns: [
                             { id: "id", header: "ลำดับ", width: 30, editable: false },
                             { id: "products", header: ["รายการสินค้า", { content: "textFilter" }], minWidth: 200, fillspace: true, editable: false, },
-                            { id: "brand", width: 100, editable: false, header: ["ตรา", { content: "selectFilter" }], css: { "text-align": "right" } },
+                            { id: "brand", width: 100, editable: false, header: ["ตรา", { content: "selectFilter" }], css: { "text-align": "center" } },
                             { id: "white", header: "สีขาว", width: 120, editor: "text", css: { "text-align": "right" } },
                             { id: "yellow", header: "สีเหลือง", width: 120, editor: "text", css: { "text-align": "right" } },
                             { id: "red", header: "สีแดง", width: 120, editor: "text", css: { "text-align": "right" } },
