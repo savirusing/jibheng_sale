@@ -19,6 +19,7 @@ webix.ui({
                         view: "datatable",
                         // autoConfig: true,
                         select: "cell",
+                        fillspace:true,
                         css: "rows",
                         math: true,
                         editable: true,
