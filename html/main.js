@@ -43,7 +43,7 @@ webix.ready(function () {
                             ],
                             on: {
                                 onAfterLoad: function () {
-                                    this.parse(candle_data);
+                                    // this.parse(candle_data);
                                 }
                             }
                             // data: [

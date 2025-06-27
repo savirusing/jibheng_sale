@@ -20,5 +20,6 @@ fetch("https://script.google.com/macros/s/AKfycbwQ4WH9Zh6zVrF41DZ0whj4obHLsbOI8U
             }
         }
         // console.log(candle_data); // แสดงข้อมูลทั้งหมดในชีต
-        $$("p_candle_table").parse(candle_data);
+        console.log("ready");
+        // $$("p_candle_table").parse(candle_data);
     });
