@@ -9,6 +9,11 @@ webix.ready(function () {
                     { view: "text", labelPosition: "left", labelAlign: "right", name: "customerName", width: 200, label: "ชื่อร้านค้า", editable: false },
                     { view: "text", labelPosition: "left", labelAlign: "right", name: "Address", width: 200, label: "ที่อยู่", editable: false },
                     {},
+                    {
+                        view: "button", width: 120, label: "refresh", css: "webix_primary", click: function () {
+                            $$("p_candle_table").refresh();
+                        }
+                    },
                     { view: "button", width: 120, label: "ประวัติลูกค้า", css: "webix_primary" },
                 ]
             },
