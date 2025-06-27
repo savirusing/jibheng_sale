@@ -16,10 +16,13 @@ webix.ui({
                     header: "เทียน",
                     body: {
                         view: "datatable",
+                        id:"p_candle_table",
                         // autoConfig: true,
                         select: "cell",
-                        fillspace:true,
-                        autoHeight:true,
+                        fillspace: true,
+                        autoheight: true,
+                        editaction: "custom",
+                        navigation: true,
                         css: "rows",
                         math: true,
                         editable: true,
@@ -96,3 +99,8 @@ webix.ui({
         },
     ]
 });
+
+webix.UIManager.addHotKey("enter", function (view) {
+    var pos = view.getSelectedId();
+    view.edit(pos);
+}, $$("p_candle_table"));
