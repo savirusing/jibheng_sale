@@ -1,32 +1,30 @@
 function textCenter(text) {
     return { text: text, css: { "text-align": "center" } };
 }
+let main_link = "https://script.google.com/macros/s/AKfycbwQ4WH9Zh6zVrF41DZ0whj4obHLsbOI8UQuuAXBTD8BqyTaGqkbpTPpHvlcqTMSr9Zq/exec";
+let link = {
+    candle01: main_link + "?sheet=candle01",
+    history: main_link + "?sheet=history",
+}
 
-let candle_data = [];
-fetch("https://script.google.com/macros/s/AKfycbwQ4WH9Zh6zVrF41DZ0whj4obHLsbOI8UQuuAXBTD8BqyTaGqkbpTPpHvlcqTMSr9Zq/exec")
-    .then(res => res.json())
-    .then(data => {
-        candle_data = googleToJson(data);
-        console.log(candle_data);
-        // console.log(candle_data); // แสดงข้อมูลทั้งหมดในชีต
-        console.log("ready");
-        // $$("p_candle_table").parse(candle_data);
+function convertSheetData(data) {
+    const [header, ...rows] = data;
+    return rows.map(row => {
+        let obj = {};
+        row.forEach((val, i) => obj[header[i]] = val);
+        return obj;
     });
+}
 
-function googleToJson(data) {
-    let new_data = [];
-    let column = [];
-    for ([key, value] of Object.entries(data)) {
-        if (key == 0) {
-            column = value;
-        }
-        else {
-            let row_data = {};
-            for ([k, v] of Object.entries(value)) {
-                row_data[column[k]] = v
-            }
-            new_data.push(row_data)
-        }
-    }
-    return new_data;
+function fetchData(linkToLoad) {
+    return fetch(linkToLoad)
+        .then(res => res.json())
+        .then(data => {
+            return convertSheetData(data); // ← ฟังก์ชันแปลงข้อมูลให้เป็น array of objects
+        });
+};
+
+function refreshData() {
+    $$("p_candle_table").define({ url: function () { fetchData(link.candle01) } });
+    $$("p_candle_table").refresh();
 }
