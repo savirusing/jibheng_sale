@@ -2,11 +2,13 @@ webix.ui({
     rows: [
         { view: "template", type: "header", template: "ระบบรายงานรายการสั่งซื้อสินค้า" },
         {
-            id: "customerForm", view: "form", cols: [
+            id: "customerForm", view: "form", type: "clean", cols: [
                 { view: "button", width: 120, label: "เลือกลูกค้า", css: "webix_primary" },
                 { view: "text", labelPosition: "left", labelAlign: "right", name: "customerID", width: 200, label: "รหัส", editable: false },
                 { view: "text", labelPosition: "left", labelAlign: "right", name: "customerName", width: 200, label: "ชื่อร้านค้า", editable: false },
                 { view: "text", labelPosition: "left", labelAlign: "right", name: "Address", width: 200, label: "ที่อยู่", editable: false },
+                {},
+                { view: "button", width: 120, label: "ประวัติลูกค้า", css: "webix_primary" },
             ]
         },
         {
@@ -16,7 +18,7 @@ webix.ui({
                     header: "เทียน",
                     body: {
                         view: "datatable",
-                        id:"p_candle_table",
+                        id: "p_candle_table",
                         // autoConfig: true,
                         select: "cell",
                         fillspace: true,
