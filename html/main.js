@@ -27,6 +27,7 @@ webix.ui({
                         // autoConfig: true,
                         select: "cell",
                         fillspace: true,
+                        scroll:true,
                         autoheight: true,
                         editaction: "custom",
                         navigation: true,
