@@ -23,8 +23,6 @@ webix.ui({
                         select: "cell",
                         fillspace: true,
                         scroll:true,
-                        autoheight: true,
-                        navigation: true,
                         css: "rows",
                         math: true,
                         editable: true,
