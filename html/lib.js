@@ -13,7 +13,7 @@ fetch("https://script.google.com/macros/s/AKfycbwQ4WH9Zh6zVrF41DZ0whj4obHLsbOI8U
             else {
                 let row_data = {};
                 for ([k,v] of Object.entries(value)){
-                    row_data[k] = v
+                    row_data[column[k]] = v
                 }
                 candle_data.push(row_data)
             }
