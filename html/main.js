@@ -36,6 +36,30 @@ webix.ready(function () {
                                 { id: "pink", header: [textCenter("สีชมพู")], width: 120, editor: "text", css: { "text-align": "right" } },
                                 { id: "total", header: [textCenter("รวม")], width: 120, editable: false, css: { "text-align": "right" }, math: "[$r,white]+[$r,yellow]+[$r,red]+[$r,pink]" },
                             ],
+                            on: {
+                                onAfterLoad: function () {
+                                    let candle_data = [];
+                                    fetch("https://script.google.com/macros/s/AKfycbwQ4WH9Zh6zVrF41DZ0whj4obHLsbOI8UQuuAXBTD8BqyTaGqkbpTPpHvlcqTMSr9Zq/exec")
+                                        .then(res => res.json())
+                                        .then(data => {
+                                            let column = [];
+                                            for ([key, value] of Object.entries(data)) {
+                                                if (key == 0) {
+                                                    column = value;
+                                                }
+                                                else {
+                                                    let row_data = {};
+                                                    for ([k, v] of Object.entries(value)) {
+                                                        row_data[column[k]] = v
+                                                    }
+                                                    candle_data.push(row_data)
+                                                }
+                                            }
+                                            // console.log(candle_data); // แสดงข้อมูลทั้งหมดในชีต
+                                            $$("p_candle_table").parse(candle_data);
+                                        });
+                                }
+                            }
                             // data: [
                             //     { id: 1, products: "5*8*150 DB", brand: "ดอกบัว", pcs: "ลัง" },
                             //     { id: 2, products: "5*8*150 A", brand: "อูฐ", pcs: "ลัง" },
