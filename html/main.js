@@ -11,7 +11,7 @@ webix.ready(function () {
                     {},
                     {
                         view: "button", width: 120, label: "refresh", css: "webix_primary", click: function () {
-                            $$("p_candle_table").refresh();
+                            $$("p_candle_table").parse(candle_data);
                         }
                     },
                     { view: "button", width: 120, label: "ประวัติลูกค้า", css: "webix_primary" },
