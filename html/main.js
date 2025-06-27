@@ -25,7 +25,6 @@ webix.ready(function () {
                             scroll: true,
                             css: "rows",
                             math: true,
-                            url:"https://script.google.com/macros/s/AKfycbwQ4WH9Zh6zVrF41DZ0whj4obHLsbOI8UQuuAXBTD8BqyTaGqkbpTPpHvlcqTMSr9Zq/exec",
                             editable: true,
                             columns: [
                                 { id: "id", header: [textCenter("No.")], width: 40, editable: false },
