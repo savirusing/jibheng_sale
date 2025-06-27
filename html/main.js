@@ -1,8 +1,3 @@
-webix.UIManager.addHotKey("enter", function (view) {
-    var pos = view.getSelectedId();
-    view.edit(pos);
-}, $$("p_candle_table"));
-
 webix.ui({
     rows: [
         { view: "template", type: "header", template: "ระบบรายงานรายการสั่งซื้อสินค้า" },
@@ -29,7 +24,6 @@ webix.ui({
                         fillspace: true,
                         scroll:true,
                         autoheight: true,
-                        editaction: "custom",
                         navigation: true,
                         css: "rows",
                         math: true,
