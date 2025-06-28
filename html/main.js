@@ -3,7 +3,7 @@ webix.ready(function () {
         rows: [
             { view: "template", type: "header", template: "ระบบรายงานรายการสั่งซื้อสินค้า" },
             {
-                id: "customerForm", view: "form", type: "clean", cols: [
+                id: "customer_form", view: "form", type: "clean", cols: [
                     { view: "button", width: 120, label: "เลือกลูกค้า", css: "webix_primary" },
                     {
                         view: "text", labelPosition: "left", labelAlign: "right", name: "customer_id", width: 200, label: "รหัส", editable: false, on: {
@@ -26,6 +26,7 @@ webix.ready(function () {
             {
                 cols: [
                     {
+                        fillspace: 2,
                         view: "tabview",
                         cells: [
                             {
@@ -91,6 +92,7 @@ webix.ready(function () {
                     },
                     { view: "resizer" },
                     {
+                        fillspace: 1,
                         view: "tabview",
                         cells: [
                             {
@@ -106,8 +108,8 @@ webix.ready(function () {
                                             css: "rows",
                                             columns: [
                                                 { id: "product", header: [textCenter("รายการ"), { content: "textFilter" }], width: 250, fillspace: true, template: "#product# - #brand# - สี#color#", },
-                                                { id: "quantity", header: [textCenter("จำนวน")], width: 100, css: { "text-align": "right" } },
                                                 { id: "price", header: [textCenter("ราคา")], width: 100, css: { "text-align": "right" }, numberFormat: "1,111.00D" },
+                                                { id: "quantity", header: [textCenter("จำนวน")], width: 100, css: { "text-align": "right" } },
                                                 { id: "pcs", header: [textCenter("หน่วย")], width: 100, css: { "text-align": "center" } },
                                             ],
                                             data: [],
@@ -126,18 +128,21 @@ webix.ready(function () {
                                         },
                                         {
                                             view: "button", css: "webix_primary", label: "ยืนยันคำสั่งซื้อ", click: function () {
+                                                let form_values = $$("customer_form").getValues();
+                                                $$("order").data.each(function(row){
+                                                    row.customer_id = form_values.customer_id;
+                                                    row.customer_name = form_values.customer_name;
+                                                });
                                                 let data = $$("order").serialize();
                                                 console.log(data);
-                                                fetch(link.history, {
-                                                    method: "POST",
-                                                    body: data.toString(), // URL encoded
-                                                    headers: {
-                                                        "Content-Type": "application/x-www-form-urlencoded" // ✅ ไม่โดน CORS OPTIONS
-                                                    }
-                                                })
-                                                    .then(res => res.text())
-                                                    .then(res => console.log("ส่งสำเร็จ:", res))
-                                                    .catch(err => console.error("เกิดข้อผิดพลาด:", err));
+                                                const formData = new URLSearchParams();
+                                                formData.append("data", JSON.stringify(data));
+                                                console.log(formData);
+
+                                                fetch(link.history, { method: "POST", body: formData })
+                                                    .then(function(res){
+                                                        console.log(res);
+                                                    })
                                             }
                                         }
                                     ]
