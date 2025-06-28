@@ -73,7 +73,6 @@ webix.ready(function () {
                                             $$("order").data.each(function (row) {
                                                 count_order_total = count_order_total + Number(row.quantity);
                                             });
-                                            console.log(count_order_list);
                                             $$("total_order_count").define("label", "จำนวนทั้งสิ้น " + count_order_list + " รายการ");
                                             $$("total_order_count").refresh();
                                             $$("total_order_quantity").define("label", "รวมเป็น " + count_order_total + " ชิ้น");
@@ -129,7 +128,16 @@ webix.ready(function () {
                                             view: "button", css: "webix_primary", label: "ยืนยันคำสั่งซื้อ", click: function () {
                                                 let data = $$("order").serialize();
                                                 console.log(data);
-                                                // webix.ajax().post(link.history,)
+                                                fetch(link.history, {
+                                                    method: "POST",
+                                                    body: data.toString(), // URL encoded
+                                                    headers: {
+                                                        "Content-Type": "application/x-www-form-urlencoded" // ✅ ไม่โดน CORS OPTIONS
+                                                    }
+                                                })
+                                                    .then(res => res.text())
+                                                    .then(res => console.log("ส่งสำเร็จ:", res))
+                                                    .catch(err => console.error("เกิดข้อผิดพลาด:", err));
                                             }
                                         }
                                     ]
