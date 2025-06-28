@@ -7,6 +7,15 @@ let link = {
     history: main_link + "?sheet=history",
 }
 
+let options = {
+    candle01:{
+        white:"สีขาว",
+        yellow:"สีเหลือง",
+        red:"สีแดง",
+        pink:"สีชมพู",
+    }
+}
+
 function convertSheetData(data) {
     const [header, ...rows] = data;
     return rows.map(row => {

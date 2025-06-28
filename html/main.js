@@ -33,45 +33,51 @@ webix.ready(function () {
                                 body: {
                                     view: "datatable",
                                     id: "p_candle_table",
-                                    select: "cell",
+                                    select: "row",
                                     fillspace: true,
                                     scroll: true,
                                     css: "rows",
                                     math: true,
+                                    tooltip: true,
                                     editable: true,
                                     columns: [
                                         { id: "id", header: [textCenter("No.")], width: 40, editable: false },
-                                        { id: "product", header: [textCenter("รายการสินค้า"), { placeholder: "ค้นหาสินค้า", content: "textFilter" }], width: 200, fillspace: true, editable: false, },
-                                        { id: "brand", width: 100, editable: false, header: [textCenter("ตรา"), { content: "selectFilter" }], css: { "text-align": "center" } },
-                                        { id: "white", header: [textCenter("สีขาว")], width: 100, editor: "text", css: { "text-align": "right" } },
-                                        { id: "yellow", header: [textCenter("สีเหลือง")], width: 100, editor: "text", css: { "text-align": "right" } },
-                                        { id: "red", header: [textCenter("สีแดง")], width: 100, editor: "text", css: { "text-align": "right" } },
-                                        { id: "pink", header: [textCenter("สีชมพู")], width: 100, editor: "text", css: { "text-align": "right" } },
-                                        { id: "total", header: [textCenter("รวม")], width: 100, editable: false, css: { "text-align": "right" }, math: "[$r,white]+[$r,yellow]+[$r,red]+[$r,pink]" },
+                                        { id: "product", header: [{ placeholder: "ค้นหาสินค้า", content: "textFilter" }], minWidth: 200, fillspace: true, editable: false, },
+                                        { id: "brand", width: 100, editable: false, header: [{ placeholder: "ตรา", content: "selectFilter" }], css: { "text-align": "center" } },
+                                        { id: "color", width: 120, editable: false, header: [{ placeholder: "สี", content: "selectFilter" }], css: { "text-align": "center" } },
+                                        { id: "price", width: 120, editor: "text", header: [textCenter("ราคา")], css: { "text-align": "right" }, numberFormat: "1,111.00" },
+                                        { id: "quantity", header: [textCenter("จำนวน")], width: 100, editor: "text", css: { "text-align": "right" } },
+                                        { id: "pcs", header: [textCenter("หน่วย")], width: 80, editable: false, css: { "text-align": "center" }, tooltip: "#remark#" },
                                     ],
                                     url: function () {
                                         return fetchData(link.candle01);
                                     },
                                     on: {
-                                        onDataUpdate: function () {
-                                            let order_items = this.find(function (obj) {
-                                                return obj.total != 0;
-                                            })
-                                            // console.log(order_items);
-                                            let order_sep = [];
-                                            let i = 0;
-                                            for (let item_arr of Object.entries(order_items)) {
-                                                let item = item_arr[1];
-                                                // console.log(item);
-                                                let pre_product = item.product + " " + item.brand + " ";
-                                                if (item.white > 0) order_sep.push({ id: i++, product: pre_product + "สีขาว", quantity: item.white });
-                                                if (item.yellow > 0) order_sep.push({ id: i++, product: pre_product + "สีเหลือง", quantity: item.yellow });
-                                                if (item.red > 0) order_sep.push({ id: i++, product: pre_product + "สีแดง", quantity: item.red });
-                                                if (item.pink > 0) order_sep.push({ id: i++, product: pre_product + "สีชมพู", quantity: item.pink });
+                                        onBeforeEditStart: function (obj) {
+                                            if (obj.column == "price") {
+                                                webix.confirm("ต้องการอนุญาตแก้ไขราคา?", "confirm-warning")
+                                                    .then()
+                                                    .fail(function () {
+                                                        $$("p_candle_table").editCancel();
+                                                    });
                                             }
-                                            $$("order").clearAll();
-                                            $$("order").parse(order_sep);
-                                            // console.log(order_sep);
+                                        },
+                                        onDataUpdate: function () {
+                                            $$("order").sync($$("p_candle_table"), function () {
+                                                this.filter(function (data) {
+                                                    return data.quantity > 0;
+                                                });
+                                            });
+                                            let count_order_list = $$("order").count();
+                                            let count_order_total = 0;
+                                            $$("order").data.each(function (row) {
+                                                count_order_total = count_order_total + Number(row.quantity);
+                                            });
+                                            console.log(count_order_list);
+                                            $$("total_order_count").define("label", "จำนวนทั้งสิ้น " + count_order_list + " รายการ");
+                                            $$("total_order_count").refresh();
+                                            $$("total_order_quantity").define("label", "รวมเป็น " + count_order_total + " ชิ้น");
+                                            $$("total_order_quantity").refresh();
                                         }
                                     }
                                 }
@@ -91,17 +97,42 @@ webix.ready(function () {
                             {
                                 header: "รายการสั่งซื้อบิลนี้",
                                 body: {
-                                    view: "datatable",
-                                    width: 550,
-                                    id: "order",
-                                    fillspace: true,
-                                    select: "row",
-                                    css: "rows",
-                                    columns: [
-                                        { id: "product", header: [textCenter("รายการ"), { content: "textFilter" }], width: 250, fillspace: true },
-                                        { id: "quantity", header: [textCenter("จำนวน")], width: 100 },
-                                    ],
-                                    data: [],
+                                    rows: [
+                                        {
+                                            view: "datatable",
+                                            width: 550,
+                                            id: "order",
+                                            fillspace: true,
+                                            select: "row",
+                                            css: "rows",
+                                            columns: [
+                                                { id: "product", header: [textCenter("รายการ"), { content: "textFilter" }], width: 250, fillspace: true, template: "#product# - #brand# - สี#color#", },
+                                                { id: "quantity", header: [textCenter("จำนวน")], width: 100, css: { "text-align": "right" } },
+                                                { id: "price", header: [textCenter("ราคา")], width: 100, css: { "text-align": "right" }, numberFormat: "1,111.00D" },
+                                                { id: "pcs", header: [textCenter("หน่วย")], width: 100, css: { "text-align": "center" } },
+                                            ],
+                                            data: [],
+                                            on: {
+                                                onDataUpdate: function () {
+
+                                                }
+                                            }
+                                        },
+                                        {
+                                            view: "form", type: "clean", cols: [
+                                                { view: "label", width: 200, id: "total_order_count", label: "จำนวนทั้งสิ้น 0 รายการ" },
+                                                {},
+                                                { view: "label", css: { "text-align": "right" }, width: 200, id: "total_order_quantity", label: "รวมเป็น 0 ชิ้น" },
+                                            ]
+                                        },
+                                        {
+                                            view: "button", css: "webix_primary", label: "ยืนยันคำสั่งซื้อ", click: function () {
+                                                let data = $$("order").serialize();
+                                                console.log(data);
+                                                // webix.ajax().post(link.history,)
+                                            }
+                                        }
+                                    ]
                                 }
                             },
                             {
@@ -115,8 +146,9 @@ webix.ready(function () {
                                     css: "rows",
                                     columns: [
                                         { id: "timestamp", header: [textCenter("สั่งซื้อเมื่อ"), { content: "selectFilter" }], width: 200 },
-                                        { id: "product", header: [textCenter("รายการ"), { content: "textFilter" }], width: 250, fillspace: true },
+                                        { id: "product", header: [textCenter("รายการ"), { content: "textFilter" }], minWidth: 250, fillspace: true },
                                         { id: "quantity", header: [textCenter("จำนวน")], width: 100 },
+                                        { id: "pcs", header: [textCenter("หน่วย")], width: 100 },
                                     ],
                                     url: function () {
                                         return fetchData(link.history);
